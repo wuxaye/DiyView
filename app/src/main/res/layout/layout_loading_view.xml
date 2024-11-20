@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.xaye.diyview.view.ShapeView
+        android:id="@+id/shape_view"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="82dp"/>
+
+    <View
+        android:id="@+id/shadow_view"
+        android:layout_width="25dp"
+        android:layout_height="3dp"
+        android:background="@drawable/shadow_bg"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="玩命加载中..."/>
+
+</LinearLayout>
