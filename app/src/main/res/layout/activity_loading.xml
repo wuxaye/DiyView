@@ -8,7 +8,7 @@
     tools:context=".ui.LoadingActivity"
     android:orientation="vertical">
 
-    <com.xaye.diyview.view.LoadingView
+    <com.xaye.diyview.view.loading.LoadingView
         android:id="@+id/loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -5,3 +5,13 @@
 <p align="center">
   <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/loadingView.gif" >
 </p>
+
+2. 文字变色
+<p align="center">
+  <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/TVTrackView.gif" >
+</p>
+
+3. 环形进度条
+<p align="center">
+  <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/circleView.gif" >
+</p>

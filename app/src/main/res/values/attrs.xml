@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ColorTrackTextView">
+        <attr name="originColor" format="color"/>
+        <attr name="changeColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircularProgressBar">
+        <!-- 进度条的最大值 -->
+        <attr name="maxProgress" format="integer"/>
+        <!-- 当前进度 -->
+        <attr name="progress" format="integer"/>
+        <!-- 环形进度条的背景色 -->
+        <attr name="circleBackgroundColor" format="color"/>
+        <!-- 进度条的颜色 -->
+        <attr name="progressColor" format="color"/>
+        <!-- 进度条的宽度 -->
+        <attr name="circleWidth" format="dimension"/>
+        <!-- 显示进度文本 -->
+        <attr name="showProgressText" format="boolean"/>
+        <!-- 进度文本的颜色 -->
+        <attr name="progressTextColor" format="color"/>
+        <!-- 进度文本的大小 -->
+        <attr name="progressTextSize" format="dimension"/>
+        <!-- 开始角度 -->
+        <attr name="startAngle" format="enum">
+            <enum name="angle0" value="0"/>
+            <enum name="angle90" value="90"/>
+            <enum name="angle180" value="180"/>
+            <enum name="angle270" value="270"/>
+        </attr>
+    </declare-styleable>
+
+</resources>

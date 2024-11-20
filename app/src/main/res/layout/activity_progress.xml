@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    tools:context=".ui.ProgressActivity">
+
+    <com.xaye.diyview.view.progress.CircularProgressBar
+        android:id="@+id/circularProgressBar"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        app:maxProgress="100"
+        app:circleBackgroundColor="#DDDDDD"
+        app:progressColor="#00B8D4"
+        app:circleWidth="15dp"
+        app:showProgressText="true"
+        app:progressTextColor="#000000"
+        app:progressTextSize="30sp"
+        app:startAngle="angle0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/circularProgressBar2"/>
+
+    <com.xaye.diyview.view.progress.CircularProgressBar
+        android:id="@+id/circularProgressBar2"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        app:maxProgress="100"
+        app:circleBackgroundColor="#DDDDDD"
+        app:progressColor="#0091EA"
+        app:circleWidth="15dp"
+        app:showProgressText="true"
+        app:progressTextColor="#000000"
+        app:progressTextSize="30sp"
+        app:startAngle="angle90"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintLeft_toRightOf="@id/circularProgressBar"
+        app:layout_constraintTop_toTopOf="@id/circularProgressBar"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <com.xaye.diyview.view.progress.CircularProgressBar
+        android:id="@+id/circularProgressBar3"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        app:maxProgress="100"
+        app:circleBackgroundColor="#DDDDDD"
+        app:progressColor="#2962FF"
+        app:circleWidth="15dp"
+        app:showProgressText="true"
+        app:progressTextColor="#000000"
+        app:progressTextSize="30sp"
+        app:startAngle="angle180"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/circularProgressBar"
+        app:layout_constraintRight_toLeftOf="@+id/circularProgressBar2"/>
+
+    <com.xaye.diyview.view.progress.CircularProgressBar
+        android:id="@+id/circularProgressBar4"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        app:maxProgress="100"
+        app:circleBackgroundColor="#DDDDDD"
+        app:progressColor="#4CAF50"
+        app:circleWidth="15dp"
+        app:showProgressText="true"
+        app:progressTextColor="#000000"
+        app:progressTextSize="30sp"
+        app:startAngle="angle270"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintLeft_toRightOf="@id/circularProgressBar3"
+        app:layout_constraintTop_toTopOf="@id/circularProgressBar3"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/btnStartAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circularProgressBar"
+        android:text="开始"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/circularProgressBar3"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

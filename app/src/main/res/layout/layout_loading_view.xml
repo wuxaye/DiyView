@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.xaye.diyview.view.ShapeView
+    <com.xaye.diyview.view.loading.ShapeView
         android:id="@+id/shape_view"
         android:layout_width="25dp"
         android:layout_height="25dp"

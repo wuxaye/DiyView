@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/dp_10"
+    tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/btn_58view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="仿58加载界面"/>
+        android:text="仿58加载界面" />
+
+    <Button
+        android:id="@+id/btn_tv_track"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="文字变色"/>
+
+    <Button
+        android:id="@+id/btn_circle_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="环形进度条"/>
 
 </LinearLayout>

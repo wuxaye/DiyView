@@ -14,6 +14,12 @@
         android:theme="@style/Theme.Diyview"
         tools:targetApi="31">
         <activity
+            android:name=".ui.ProgressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.TrackActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.LoadingActivity"
             android:exported="false" />
         <activity

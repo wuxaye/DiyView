@@ -1,4 +1,4 @@
-package com.xaye.diyview.view;
+package com.xaye.diyview.view.loading;
 
 
 import android.animation.Animator;
