@@ -11,7 +11,7 @@
   <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/TVTrackView.gif" >
 </p>
 
-3. [文字变色应用](https://juejin.cn/post/7436217936564273178)
+3. [文字变色应用](https://juejin.cn/post/7436370478519042063)
 <p align="center">
   <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/trackTvVpView.gif" >
 </p>
@@ -26,7 +26,7 @@
   <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/qqStepView.gif" >
 </p>
 
-6. [评分控件](https://juejin.cn/post/7436667191539466250)
+6. [评分控件](https://juejin.cn/post/7441190456501043211)
 <p align="center">
   <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/ratingView.gif" >
 </p>
