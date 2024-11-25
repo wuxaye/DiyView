@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="30dp"
+    android:gravity="center_horizontal"
     tools:context=".ui.RatingBarActivity">
 
     <com.xaye.diyview.view.rating.RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:gradeNumber="5"
-        app:startFocus="@drawable/star_selected"
-        app:startNormal="@drawable/star_normal" />
+        app:starFocus="@drawable/star_selected"
+        app:starNormal="@drawable/star_normal" />
 
 </LinearLayout>

@@ -13,11 +13,11 @@ import com.xaye.diyview.R;
 
 
 public class ColorTrackTextView extends androidx.appcompat.widget.AppCompatTextView {
-    // 初始颜色的画笔
-    private Paint mInitialPaint;
+    // 原始的画笔
+    private Paint mOriginPaint;
 
-    // 改变颜色的画笔
-    private Paint mChangedPaint;
+    // 改变的画笔
+    private Paint mChangePaint;
 
     // 当前进度值，范围为 0.0 到 1.0
     private float mProgress = 0f;
@@ -51,8 +51,8 @@ public class ColorTrackTextView extends androidx.appcompat.widget.AppCompatTextV
         int changedColor = typedArray.getColor(R.styleable.ColorTrackTextView_changeColor, getTextColors().getDefaultColor());
 
         // 创建两个画笔，一个用于初始颜色，一个用于变化后的颜色
-        mInitialPaint = createPaint(initialColor);
-        mChangedPaint = createPaint(changedColor);
+        mOriginPaint = createPaint(initialColor);
+        mChangePaint = createPaint(changedColor);
 
         typedArray.recycle();
     }
@@ -76,11 +76,11 @@ public class ColorTrackTextView extends androidx.appcompat.widget.AppCompatTextV
 
         // 获取文本的边界和基线位置
         Rect textBounds = new Rect();
-        mInitialPaint.getTextBounds(text, 0, text.length(), textBounds);
+        mOriginPaint.getTextBounds(text, 0, text.length(), textBounds);
         int textWidth = textBounds.width();
         int x = width / 2 - textWidth / 2; // 计算文本绘制的起始 X 坐标
 
-        Paint.FontMetrics fontMetrics = mInitialPaint.getFontMetrics();
+        Paint.FontMetrics fontMetrics = mOriginPaint.getFontMetrics();
         int baseline = height / 2 + (int) ((fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom); // 计算基线 Y 坐标
 
         // 根据当前进度和方向绘制文本
@@ -88,12 +88,12 @@ public class ColorTrackTextView extends androidx.appcompat.widget.AppCompatTextV
 
         if (mDirection == Direction.LEFT_TO_RIGHT) {
             // 从左到右：左边是改变颜色，右边是初始颜色
-            drawText(canvas, mChangedPaint, x, baseline, 0, middle); // 绘制不变色部分
-            drawText(canvas, mInitialPaint, x, baseline, middle, width); // 绘制变色部分
+            drawText(canvas, mChangePaint, x, baseline, 0, middle); // 绘制不变色部分
+            drawText(canvas, mOriginPaint, x, baseline, middle, width); // 绘制变色部分
         } else if (mDirection == Direction.RIGHT_TO_LEFT) {
             // 从右到左：右边是改变颜色，左边是初始颜色
-            drawText(canvas, mChangedPaint, x, baseline, width - middle, width); // 绘制不变色部分
-            drawText(canvas, mInitialPaint, x, baseline, 0, width - middle); // 绘制变色部分
+            drawText(canvas, mChangePaint, x, baseline, width - middle, width); // 绘制不变色部分
+            drawText(canvas, mOriginPaint, x, baseline, 0, width - middle); // 绘制变色部分
         }
     }
 
@@ -114,5 +114,13 @@ public class ColorTrackTextView extends androidx.appcompat.widget.AppCompatTextV
     public void setProgress(float progress) {
         mProgress = progress;
         invalidate(); // 重绘视图
+    }
+
+    public void setChangeColor(int changeColor) {
+        this.mChangePaint.setColor(changeColor);
+    }
+
+    public void setOriginColor(int originColor) {
+        this.mOriginPaint.setColor(originColor);
     }
 }

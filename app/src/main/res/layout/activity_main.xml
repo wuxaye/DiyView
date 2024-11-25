@@ -21,9 +21,28 @@
         android:text="文字变色"/>
 
     <Button
+        android:id="@+id/btn_track_tv_vp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="文字变色应用"/>
+
+    <Button
         android:id="@+id/btn_circle_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="环形进度条"/>
+
+    <Button
+        android:id="@+id/btn_qqstep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="仿QQ步数"/>
+
+    <Button
+        android:id="@+id/btn_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="评分"/>
+
 
 </LinearLayout>

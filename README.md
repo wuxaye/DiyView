@@ -11,7 +11,22 @@
   <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/TVTrackView.gif" >
 </p>
 
-3. [环形进度条](https://juejin.cn/post/7436667191539466250)
+3. [文字变色应用](https://juejin.cn/post/7436217936564273178)
+<p align="center">
+  <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/trackTvVpView.gif" >
+</p>
+
+4. [环形进度条](https://juejin.cn/post/7436667191539466250)
 <p align="center">
   <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/circleView.gif" >
+</p>
+
+5. [仿QQ步数](https://juejin.cn/post/7436667191539466250)
+<p align="center">
+  <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/qqStepView.gif" >
+</p>
+
+6. [评分控件](https://juejin.cn/post/7436667191539466250)
+<p align="center">
+  <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/ratingView.gif" >
 </p>
