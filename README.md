@@ -28,5 +28,5 @@
 
 6. [评分控件](https://juejin.cn/post/7436667191539466250)
 <p align="center">
-  <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/ratingView.gif" >
+  <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/ratingView.gif" >
 </p>
