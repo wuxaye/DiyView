@@ -8,7 +8,7 @@
 
 2. [文字变色](https://juejin.cn/post/7436217936564273178)
 <p align="center">
-  <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/TVTrackView.gif" >
+  <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/TVTrackView.gif" >
 </p>
 
 3. [文字变色应用](https://juejin.cn/post/7436217936564273178)
