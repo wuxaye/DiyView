@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.xaye.diyview.app.base.BaseActivity
 import com.xaye.diyview.databinding.ActivityMainBinding
+import com.xaye.diyview.ui.AlphabetActivity
 import com.xaye.diyview.ui.LoadingActivity
 import com.xaye.diyview.ui.ProgressActivity
 import com.xaye.diyview.ui.QQStepActivity
@@ -25,7 +26,8 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
             mBind.btnCircleProgress,
             mBind.btnQqstep,
             mBind.btnTrackTvVp,
-            mBind.btnRating
+            mBind.btnRating,
+            mBind.btnAlphabet
         ) {
             when (it.id) {
                 R.id.btn_58view -> {
@@ -50,6 +52,10 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
 
                 R.id.btn_rating -> {
                     startActivity(Intent(this, RatingBarActivity::class.java))
+                }
+
+                R.id.btn_alphabet -> {
+                    startActivity(Intent(this, AlphabetActivity::class.java))
                 }
             }
         }
