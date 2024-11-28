@@ -33,5 +33,5 @@
 
 7. [侧边字母选择器](https://juejin.cn/post/7442284498741198858)
 <p align="center">
-  <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/alphabetView.gif" >
+  <img width="300" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/alphabetView.gif" >
 </p>
