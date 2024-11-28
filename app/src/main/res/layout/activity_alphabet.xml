@@ -7,10 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.AlphabetActivity">
 
+    <TextView
+        android:id="@+id/tv_letter"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:textSize="26sp"
+        android:text="A"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/circle_background"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
 
     <com.xaye.diyview.view.alphabet.AlphabetTouchView
+        android:id="@+id/at_view"
         android:layout_width="30dp"
+        app:selectedTextColor="@color/red"
+        app:textSize="8sp"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

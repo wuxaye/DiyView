@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -20,11 +21,11 @@ import com.xaye.diyview.R;
  */
 public class AlphabetTouchView extends View {
     private static final String DEFAULT_ALPHABET  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#";
-    private String mAlphabet = DEFAULT_ALPHABET;
+    private String mAlphabet;
     private Paint mTextPaint;
     private Paint mBubblePaint;
-    private int mTextSize = 12;
-    private int mTextColor = Color.BLACK;
+    private int mTextSize;
+    private int mTextColor;
     private int mSelectedTextColor = Color.RED;
     private int mWidth, mHeight;
     private float mLetterHeight;
@@ -54,7 +55,7 @@ public class AlphabetTouchView extends View {
                 0, 0);
 
         try {
-            mTextSize = a.getDimensionPixelSize(R.styleable.AlphabetTouchView_textSize, 12);
+            mTextSize = a.getDimensionPixelSize(R.styleable.AlphabetTouchView_textSize, 14);
             mTextColor = a.getColor(R.styleable.AlphabetTouchView_textColor, Color.BLACK);
             mSelectedTextColor = a.getColor(R.styleable.AlphabetTouchView_selectedTextColor, Color.RED);
             mAlphabet = a.getString(R.styleable.AlphabetTouchView_alphabet);
@@ -69,10 +70,14 @@ public class AlphabetTouchView extends View {
         init();
     }
 
+    private float sp2px(int sp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, getResources().getDisplayMetrics());
+    }
+
     private void init() {
         mTextPaint = new Paint();
         mTextPaint.setColor(mTextColor);
-        mTextPaint.setTextSize(mTextSize);
+        mTextPaint.setTextSize(sp2px(mTextSize));
         mTextPaint.setAntiAlias(true);
 
         mBubblePaint = new Paint();
@@ -133,12 +138,15 @@ public class AlphabetTouchView extends View {
                 if (index >= 0 && index < mAlphabet.length()) {
                     mSelectedIndex = index;
                     if (mListener != null) {
-                        mListener.onLetterSelected(String.valueOf(mAlphabet.charAt(mSelectedIndex)));
+                        mListener.onLetterSelected(String.valueOf(mAlphabet.charAt(mSelectedIndex)),true);
                     }
                     invalidate();
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                if (mListener != null) {
+                    mListener.onLetterSelected(String.valueOf(mAlphabet.charAt(mSelectedIndex)),false);
+                }
                 mSelectedIndex = -1;
                 invalidate();
                 break;
@@ -147,7 +155,7 @@ public class AlphabetTouchView extends View {
     }
 
     public interface OnLetterSelectedListener {
-        void onLetterSelected(String letter);
+        void onLetterSelected(String letter,boolean  isTouch);
     }
 
 
