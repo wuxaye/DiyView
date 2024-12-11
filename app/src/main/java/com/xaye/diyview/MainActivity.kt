@@ -10,6 +10,7 @@ import com.xaye.diyview.ui.ProgressActivity
 import com.xaye.diyview.ui.QQStepActivity
 import com.xaye.diyview.ui.RatingBarActivity
 import com.xaye.diyview.ui.TrackActivity
+import com.xaye.diyview.ui.TrackViewActivity
 import com.xaye.diyview.ui.ViewPageActivity
 import com.xaye.helper.base.BaseViewModel
 import com.xaye.helper.ext.setOnclickNoRepeat
@@ -27,7 +28,8 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
             mBind.btnQqstep,
             mBind.btnTrackTvVp,
             mBind.btnRating,
-            mBind.btnAlphabet
+            mBind.btnAlphabet,
+            mBind.btnTrack
         ) {
             when (it.id) {
                 R.id.btn_58view -> {
@@ -56,6 +58,10 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
 
                 R.id.btn_alphabet -> {
                     startActivity(Intent(this, AlphabetActivity::class.java))
+                }
+
+                R.id.btn_track -> {
+                    startActivity(Intent(this, TrackViewActivity::class.java))
                 }
             }
         }
