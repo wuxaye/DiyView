@@ -25,7 +25,7 @@ class TrackViewActivity : BaseActivity<BaseViewModel, ActivityTrackViewBinding>(
         val runnable: Runnable = object : Runnable {
             override fun run() {
                 mBind.trackView.updateUserDistance()
-                handler.postDelayed(this, 16) // 每 16 毫秒更新 (约 60 FPS)
+                handler.postDelayed(this, 33) // 每 16 毫秒更新 (约 60 FPS)
             }
         }
         handler.post(runnable)

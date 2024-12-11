@@ -13,6 +13,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -86,6 +87,7 @@ public class TrackView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        Log.d("onDraw", "start >>>");
         // 1. 绘制跑道
         canvas.drawPath(trackPath, trackPaint);
 
@@ -94,6 +96,7 @@ public class TrackView extends View {
             //drawUserPath(canvas, user);
             drawUserAvatar(canvas, user);
         }
+        Log.d("onDraw", "end >>>");
     }
 
     /**
@@ -149,13 +152,31 @@ public class TrackView extends View {
      * 将头像裁剪为圆形
      */
     private Bitmap createCircularBitmap(Bitmap bitmap, int size) {
-        Bitmap output = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        //1. 这将作为新的圆形 Bitmap 的画布，后面我们会在这张画布上“绘制”一个圆形的图片。
+        Bitmap output = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);//创建一个空白的 Bitmap
+
+        //2. 画布 canvas 会将所有的绘图操作（如画圆、画图像等）直接绘制到 Bitmap 上。
         Canvas canvas = new Canvas(output);
+
+        //3. 创建 Paint 画笔对象  Paint.ANTI_ALIAS_FLAG 是抗锯齿标志，可以让绘制的边缘更平滑（消除锯齿效果）
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        //4. 这个矩形表示图片的绘制区域，我们稍后会将图片填充到这个矩形中。
         Rect rect = new Rect(0, 0, size, size);
+
+        //5. 在 output 中绘制一个圆（默认颜色是透明的，因为没有设置 paint.setColor）。
         canvas.drawCircle(size / 2f, size / 2f, size / 2f, paint);
+
+        //6. PorterDuffXfermode(PorterDuff.Mode.SRC_IN) 表示的意思是：
+        //只保留源图像和目标图像的交集部分，并显示源图像的像素。
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, null, rect, paint);
+
+        //7. 由于在第 6 步中设置了 PorterDuff.Mode.SRC_IN，只有前面圆的部分会显示，圆外的部分将被裁剪掉。
+        //第一个参数 bitmap：要绘制的原始图片。
+        //第二个参数 null：表示不裁剪原始 bitmap，使用整个图片。
+        //第三个参数 rect：目标矩形，表示将整个图片缩放并填充到这个矩形中。
+        //第四个参数 paint：前面设置了混合模式的画笔。
+        canvas.drawBitmap(bitmap, null, rect, paint); //将原始的 bitmap 绘制到 rect 矩形区域中。
         return output;
     }
 }
