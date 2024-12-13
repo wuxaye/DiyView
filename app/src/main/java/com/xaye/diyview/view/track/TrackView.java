@@ -30,16 +30,31 @@ import java.util.List;
  */
 public class TrackView extends View {
     private static final float TOTAL_DISTANCE = 400f; // 跑道总长度 400 米
+    private static final float BUBBLE_HEIGHT = 30f; // 气泡的高度
+    private static final float BUBBLE_PADDING = 10f; // 气泡的内边距
+    private static final float BUBBLE_RADIUS = 20f; // 气泡的圆角半径
+    private static final float BUBBLE_ARROW_HEIGHT = 6f; // 箭头的高度
+    private static final float BUBBLE_OFFSET = 4f; // 气泡与头像的距离
 
     private Paint trackPaint;       // 跑道画笔
     private Paint pathPaint;        // 运动路径画笔
     private Paint userPaint;        // 用户头像画笔
+    private Paint bubblePaint; // 气泡画笔
+    private Paint textPaint; // 文字画笔
     private Path trackPath;         // 跑道路径
     private RectF trackRectF;       // 跑道矩形边界
     private float trackWidth = 50f; // 跑道宽度
     private PathMeasure pathMeasure;// 用于测量路径长度
 
+    // 复用的变量，减少内存分配
+    private float[] position = new float[2];
+    private RectF bubbleRectF = new RectF();
+    private Paint.FontMetrics fontMetrics;
+    private Path bubbleArrowPath = new Path();
+
     private List<User> users = new ArrayList<>(); // 存储所有用户
+
+    private boolean isRunning = false; // 控制刷新状态
 
     public TrackView(Context context) {
         this(context, null);
@@ -66,38 +81,107 @@ public class TrackView extends View {
 
         userPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+        bubblePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        bubblePaint.setColor(Color.parseColor("#FF9800")); // 气泡颜色
+
+
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(14f);
+        fontMetrics = textPaint.getFontMetrics();
         trackPath = new Path();
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        float left = trackWidth / 2f + 20;
-        float top = trackWidth / 2f + 20;
-        float right = w - trackWidth / 2f - 20;
-        float bottom = h - trackWidth / 2f - 20;
+
+        //计算跑道的外边界矩形 (RectF)
+        float left = trackWidth / 2f + 50;
+        float top = trackWidth / 2f + 50;
+        float right = w - trackWidth / 2f - 50;
+        float bottom = h - trackWidth / 2f - 50;
         trackRectF = new RectF(left, top, right, bottom);
-        trackPath.reset();
+        trackPath.reset();//清空之前的路径，确保不会影响新的路径。
+
+        //addRoundRect 将 trackRectF 矩形变成一个带有圆角的矩形路径。
+        //300, 300 是矩形的水平和垂直的圆角半径，这使得操场的跑道具有平滑的弯曲效果。
+        //Path.Direction.CW 表示顺时针绘制路径。
         trackPath.addRoundRect(trackRectF, 300, 300, Path.Direction.CW);
 
-        pathMeasure = new PathMeasure(trackPath, false);
+        //pathMeasure 用于测量路径的长度和位置。
+        //trackPath 是路径，false 表示不闭合路径（但由于路径已经是一个完整的圆形，这里其实无关紧要）。
+        pathMeasure = new PathMeasure(trackPath, false);//pathMeasure 用于计算用户在跑道上的实时运动轨迹，以便在跑道上显示用户的当前位置。
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Log.d("onDraw", "start >>>");
+        //Log.i("TrackView", "onDraw start");
         // 1. 绘制跑道
         canvas.drawPath(trackPath, trackPaint);
 
-        // 2. 遍历所有用户，绘制路径和头像
+        User maxSpeedUser = null;
+        User minSpeedUser = null;
+        float maxSpeed = Float.MIN_VALUE;
+        float minSpeed = Float.MAX_VALUE;
+
         for (User user : users) {
-            //drawUserPath(canvas, user);
+            float speed = user.getSpeed();
+            if (speed > maxSpeed) {
+                maxSpeed = speed;
+                maxSpeedUser = user;
+            }
+            if (speed < minSpeed) {
+                minSpeed = speed;
+                minSpeedUser = user;
+            }
             drawUserAvatar(canvas, user);
         }
-        Log.d("onDraw", "end >>>");
+
+        if (maxSpeedUser != null) {
+            drawSpeedBubble(canvas, maxSpeedUser, String.format("%.2f m/s", maxSpeed));
+        }
+        if (minSpeedUser != null) {
+            drawSpeedBubble(canvas, minSpeedUser, String.format("%.2f m/s", minSpeed));
+        }
+
+        if (isRunning) {
+            postInvalidateOnAnimation(); // 只有当 isRunning 为 true 时，才会自动刷新
+        }
+        //Log.i("TrackView", "onDraw end");
     }
+
+    private void drawSpeedBubble(Canvas canvas, User user, String text) {
+        float distanceOnPath = user.getCurrentDistance() / TOTAL_DISTANCE * pathMeasure.getLength();
+        pathMeasure.getPosTan(distanceOnPath, position, null);
+
+        float bubbleWidth = textPaint.measureText(text) + BUBBLE_PADDING * 2;
+        float cx = position[0]; // 气泡的x中心点
+        float avatarTopY = position[1] - trackWidth * 0.4f; // 头像顶部的Y坐标
+
+        // 1. 计算气泡的边界
+        float bubbleBottomY = avatarTopY - BUBBLE_ARROW_HEIGHT; // 气泡的底部Y坐标
+        bubbleRectF.set(cx - bubbleWidth / 2, bubbleBottomY - BUBBLE_HEIGHT, cx + bubbleWidth / 2, bubbleBottomY);
+        canvas.drawRoundRect(bubbleRectF, BUBBLE_RADIUS, BUBBLE_RADIUS, bubblePaint);
+
+        float arrowCenterX = bubbleRectF.centerX();
+        float arrowBottomY = bubbleRectF.bottom + BUBBLE_ARROW_HEIGHT;
+
+        bubbleArrowPath.reset();
+        bubbleArrowPath.moveTo(arrowCenterX, arrowBottomY);
+        bubbleArrowPath.lineTo(arrowCenterX - BUBBLE_ARROW_HEIGHT, bubbleRectF.bottom);
+        bubbleArrowPath.lineTo(arrowCenterX + BUBBLE_ARROW_HEIGHT, bubbleRectF.bottom);
+        bubbleArrowPath.close();
+        canvas.drawPath(bubbleArrowPath, bubblePaint);
+
+        // 3. 绘制气泡中的文字
+        float textX = bubbleRectF.centerX() - textPaint.measureText(text) / 2;
+        float textY = bubbleRectF.centerY() - (fontMetrics.ascent + fontMetrics.descent) / 2;
+        canvas.drawText(text, textX, textY, textPaint);
+    }
+
 
     /**
      * 绘制用户的路径
@@ -113,39 +197,47 @@ public class TrackView extends View {
      * 绘制用户的头像
      */
     private void drawUserAvatar(Canvas canvas, User user) {
-        float[] pos = new float[2];
-        float[] tan = new float[2];
         float distanceOnPath = user.getCurrentDistance() / TOTAL_DISTANCE * pathMeasure.getLength();
-        pathMeasure.getPosTan(distanceOnPath, pos, tan);
+        pathMeasure.getPosTan(distanceOnPath, position, null);
 
         float radius = trackWidth * 0.4f;
-        canvas.drawBitmap(
-                user.avatar,
-                pos[0] - radius,
-                pos[1] - radius,
-                userPaint
-        );
+        canvas.drawBitmap(user.avatar, position[0] - radius, position[1] - radius, userPaint);
     }
 
     /**
      * 增加一个用户
      */
-    public void addUser(Bitmap avatar, float initialSpeed, float acceleration) {
-        User user = new User();
-        user.avatar = createCircularBitmap(avatar, (int) (trackWidth * 0.8f));
-        user.setSpeed(initialSpeed);
-        user.setAcceleration(acceleration);
+    public void addUser(Bitmap avatar) {
+        User user = new User(createCircularBitmap(avatar, (int) (trackWidth * 0.8f)));
         users.add(user);
     }
 
     /**
      * 更新用户的运动状态
      */
-    public void updateUserDistance() {
-        for (User user : users) {
-            user.updateDistance();
+    public void updateUserDistance(float[] newDistances) {
+        for (int i = 0; i < users.size(); i++) {
+            if (i < newDistances.length) {
+                users.get(i).setTargetDistance(newDistances[i]);
+            }
         }
-        invalidate();
+    }
+
+    /**
+     * 启动刷新
+     */
+    public void start() {
+        if (!isRunning) {
+            isRunning = true;
+            postInvalidateOnAnimation(); // 启动刷新
+        }
+    }
+
+    /**
+     * 停止刷新
+     */
+    public void stop() {
+        isRunning = false; // 停止刷新
     }
 
     /**
