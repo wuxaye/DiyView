@@ -35,3 +35,8 @@
 <p align="center">
   <img width="300" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/alphabetView.gif" >
 </p>
+
+8. 跑道
+<p align="center">
+  <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/trackview.gif" >
+</p>
