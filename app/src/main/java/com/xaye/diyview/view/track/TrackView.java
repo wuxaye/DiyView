@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
@@ -14,6 +15,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -36,13 +38,20 @@ public class TrackView extends View {
     private static final float BUBBLE_ARROW_HEIGHT = 6f; // 箭头的高度
     private static final float BUBBLE_OFFSET = 4f; // 气泡与头像的距离
 
+    private User highlightedUser; // 当前高亮的用户
+    private long highlightTime; // 记录高亮的时间戳
+    private static final long HIGHLIGHT_DURATION = 3000; // 高亮气泡显示的时长（毫秒）
+
     private Paint trackPaint;       // 跑道画笔
     private Paint pathPaint;        // 运动路径画笔
     private Paint userPaint;        // 用户头像画笔
     private Paint bubblePaint; // 气泡画笔
     private Paint textPaint; // 文字画笔
+    private Paint dashedLinePaint; // 虚线画笔
     private Path trackPath;         // 跑道路径
+    private Path dashedPath; // 中间的虚线路径
     private RectF trackRectF;       // 跑道矩形边界
+    private RectF innerTrackRectF;  // 跑道中间的虚线矩形
     private float trackWidth = 50f; // 跑道宽度
     private PathMeasure pathMeasure;// 用于测量路径长度
 
@@ -84,12 +93,21 @@ public class TrackView extends View {
         bubblePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bubblePaint.setColor(Color.parseColor("#FF9800")); // 气泡颜色
 
+        // 2. 初始化虚线画笔
+        dashedLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        dashedLinePaint.setStyle(Paint.Style.STROKE);
+        dashedLinePaint.setColor(Color.WHITE); // 虚线的颜色为白色
+        dashedLinePaint.setStrokeWidth(2f); // 虚线的宽度
+        dashedLinePaint.setPathEffect(new DashPathEffect(new float[]{20, 15}, 0)); // 每段 20px 线，15px 空白
+
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(14f);
         fontMetrics = textPaint.getFontMetrics();
+
         trackPath = new Path();
+        dashedPath = new Path();
     }
 
     @Override
@@ -97,6 +115,18 @@ public class TrackView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
 
         //计算跑道的外边界矩形 (RectF)
+        createTrackPath(w, h);
+        createDashedPath();
+
+        // 4. 生成虚线路径（跑道中心的虚线）
+        dashedPath.reset();
+        dashedPath.addRoundRect(trackRectF, 300, 300, Path.Direction.CW);
+    }
+
+    /**
+     * 创建跑道路径
+     */
+    private void createTrackPath(int w, int h) {
         float left = trackWidth / 2f + 50;
         float top = trackWidth / 2f + 50;
         float right = w - trackWidth / 2f - 50;
@@ -114,6 +144,22 @@ public class TrackView extends View {
         pathMeasure = new PathMeasure(trackPath, false);//pathMeasure 用于计算用户在跑道上的实时运动轨迹，以便在跑道上显示用户的当前位置。
     }
 
+    /**
+     * 创建跑道中间的虚线路径
+     */
+    private void createDashedPath() {
+        float offset = trackWidth / 4f; // 中间的偏移量
+        innerTrackRectF = new RectF(
+                trackRectF.left + offset,
+                trackRectF.top + offset,
+                trackRectF.right - offset,
+                trackRectF.bottom - offset
+        );
+
+        dashedPath.reset();
+        dashedPath.addRoundRect(innerTrackRectF, 300, 300, Path.Direction.CW);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -122,29 +168,16 @@ public class TrackView extends View {
         // 1. 绘制跑道
         canvas.drawPath(trackPath, trackPaint);
 
-        User maxSpeedUser = null;
-        User minSpeedUser = null;
-        float maxSpeed = Float.MIN_VALUE;
-        float minSpeed = Float.MAX_VALUE;
+        // 2. 绘制中间的虚线
+        canvas.drawPath(dashedPath, dashedLinePaint);
 
         for (User user : users) {
-            float speed = user.getSpeed();
-            if (speed > maxSpeed) {
-                maxSpeed = speed;
-                maxSpeedUser = user;
-            }
-            if (speed < minSpeed) {
-                minSpeed = speed;
-                minSpeedUser = user;
-            }
             drawUserAvatar(canvas, user);
         }
 
-        if (maxSpeedUser != null) {
-            drawSpeedBubble(canvas, maxSpeedUser, String.format("%.2f m/s", maxSpeed));
-        }
-        if (minSpeedUser != null) {
-            drawSpeedBubble(canvas, minSpeedUser, String.format("%.2f m/s", minSpeed));
+        // 仅绘制被高亮的用户的气泡
+        if (highlightedUser != null) {
+            drawSpeedBubble(canvas, highlightedUser, String.format("%.2f m/s", highlightedUser.getSpeed()));
         }
 
         if (isRunning) {
@@ -240,11 +273,47 @@ public class TrackView extends View {
         isRunning = false; // 停止刷新
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            float touchX = event.getX();
+            float touchY = event.getY();
+
+            for (User user : users) {
+                float distanceOnPath = user.getCurrentDistance() / TOTAL_DISTANCE * pathMeasure.getLength();
+                pathMeasure.getPosTan(distanceOnPath, position, null);
+
+                float avatarRadius = trackWidth * 0.4f; // 头像的半径
+                float dx = touchX - position[0];
+                float dy = touchY - position[1];
+
+                // 检测点击点是否在头像的圆形区域内
+                if (Math.sqrt(dx * dx + dy * dy) <= avatarRadius) {
+                    highlightedUser = user; // 设置高亮的用户
+                    highlightTime = System.currentTimeMillis(); // 记录点击的时间
+                    //postInvalidate(); // 触发重绘
+
+                    // 3秒后隐藏高亮的气泡
+                    postDelayed(() -> {
+                        if (System.currentTimeMillis() - highlightTime >= HIGHLIGHT_DURATION) {
+                            highlightedUser = null;
+                            //postInvalidate(); // 重新绘制
+                        }
+                    }, HIGHLIGHT_DURATION);
+
+                    break; // 只处理第一个被点击的头像
+                }
+            }
+        }
+        return true; // 返回 true 表示消费了触摸事件
+    }
+
+
     /**
      * 将头像裁剪为圆形
      */
     private Bitmap createCircularBitmap(Bitmap bitmap, int size) {
-        //1. 这将作为新的圆形 Bitmap 的画布，后面我们会在这张画布上“绘制”一个圆形的图片。
+        //1. 作为新的圆形 Bitmap 的画布，后面我们会在这张画布上“绘制”一个圆形的图片。
         Bitmap output = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);//创建一个空白的 Bitmap
 
         //2. 画布 canvas 会将所有的绘图操作（如画圆、画图像等）直接绘制到 Bitmap 上。
