@@ -21,22 +21,28 @@
   <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/circleView.gif" >
 </p>
 
-5. [仿QQ步数](https://juejin.cn/post/7436667191539466250)
+5. [带指针的渐变环形进度条](https://juejin.cn/post/7455179302729777186)
+<p align="center">
+  <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/pointProgress.gif" >
+</p>
+
+6. [仿QQ步数](https://juejin.cn/post/7436667191539466250)
 <p align="center">
   <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/qqStepView.gif" >
 </p>
 
-6. [评分控件](https://juejin.cn/post/7441190456501043211)
+7. [评分控件](https://juejin.cn/post/7441190456501043211)
 <p align="center">
   <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/ratingView.gif" >
 </p>
 
-7. [侧边字母选择器](https://juejin.cn/post/7442284498741198858)
+8. [侧边字母选择器](https://juejin.cn/post/7442284498741198858)
 <p align="center">
   <img width="300" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/alphabetView.gif" >
 </p>
 
-8. 跑道
+9. 跑道
 <p align="center">
   <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/trackview.gif" >
 </p>
+

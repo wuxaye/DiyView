@@ -5,10 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dp_10"
-    tools:context=".ui.ProgressActivity">
+    tools:context=".ui.ProgressExActivity">
 
-    <com.xaye.diyview.view.progress.CircularProgressBar
+    <com.xaye.diyview.view.progressEx.CircularProgressBarEx
         android:id="@+id/circularProgressBar"
         android:layout_width="140dp"
         android:layout_height="140dp"
@@ -18,13 +17,15 @@
         app:circleWidth="15dp"
         app:showProgressText="true"
         app:progressTextColor="#000000"
-        app:progressTextSize="30sp"
+        app:progressTextSize="20sp"
         app:startAngle="angle0"
+        app:direction="clockwise"
+        app:outerSize="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/circularProgressBar2"/>
 
-    <com.xaye.diyview.view.progress.CircularProgressBar
+    <com.xaye.diyview.view.progressEx.CircularProgressBarEx
         android:id="@+id/circularProgressBar2"
         android:layout_width="140dp"
         android:layout_height="140dp"
@@ -34,14 +35,16 @@
         app:circleWidth="15dp"
         app:showProgressText="true"
         app:progressTextColor="#000000"
-        app:progressTextSize="30sp"
+        app:progressTextSize="20sp"
         app:startAngle="angle90"
+        app:direction="clockwise"
+        app:outerSize="10dp"
         android:layout_centerHorizontal="true"
         app:layout_constraintLeft_toRightOf="@id/circularProgressBar"
         app:layout_constraintTop_toTopOf="@id/circularProgressBar"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <com.xaye.diyview.view.progress.CircularProgressBar
+    <com.xaye.diyview.view.progressEx.CircularProgressBarEx
         android:id="@+id/circularProgressBar3"
         android:layout_width="140dp"
         android:layout_height="140dp"
@@ -51,14 +54,16 @@
         app:circleWidth="15dp"
         app:showProgressText="true"
         app:progressTextColor="#000000"
-        app:progressTextSize="30sp"
+        app:progressTextSize="20sp"
         app:startAngle="angle180"
+        app:direction="counterclockwise"
+        app:outerSize="10dp"
         android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/circularProgressBar"
         app:layout_constraintRight_toLeftOf="@+id/circularProgressBar2"/>
 
-    <com.xaye.diyview.view.progress.CircularProgressBar
+    <com.xaye.diyview.view.progressEx.CircularProgressBarEx
         android:id="@+id/circularProgressBar4"
         android:layout_width="140dp"
         android:layout_height="140dp"
@@ -68,8 +73,10 @@
         app:circleWidth="15dp"
         app:showProgressText="true"
         app:progressTextColor="#000000"
-        app:progressTextSize="30sp"
+        app:progressTextSize="20sp"
         app:startAngle="angle270"
+        app:direction="counterclockwise"
+        app:outerSize="10dp"
         android:layout_centerHorizontal="true"
         app:layout_constraintLeft_toRightOf="@id/circularProgressBar3"
         app:layout_constraintTop_toTopOf="@id/circularProgressBar3"
@@ -87,10 +94,4 @@
         app:layout_constraintTop_toBottomOf="@id/circularProgressBar3"/>
 
 
-
-<!--    <com.xaye.diyview.view.progressEx.RotatingBitmapView-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="200dp"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/btnStartAnimation"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,9 @@ import com.xaye.diyview.app.base.BaseActivity
 import com.xaye.diyview.databinding.ActivityMainBinding
 import com.xaye.diyview.ui.AlphabetActivity
 import com.xaye.diyview.ui.LoadingActivity
+import com.xaye.diyview.ui.MarqueeActivity
 import com.xaye.diyview.ui.ProgressActivity
+import com.xaye.diyview.ui.ProgressExActivity
 import com.xaye.diyview.ui.QQStepActivity
 import com.xaye.diyview.ui.RatingBarActivity
 import com.xaye.diyview.ui.TrackActivity
@@ -25,11 +27,13 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
             mBind.btn58view,
             mBind.btnTvTrack,
             mBind.btnCircleProgress,
+            mBind.btnCircleProgressEx,
             mBind.btnQqstep,
             mBind.btnTrackTvVp,
             mBind.btnRating,
             mBind.btnAlphabet,
-            mBind.btnTrack
+            mBind.btnTrack,
+            mBind.btnMarquee
         ) {
             when (it.id) {
                 R.id.btn_58view -> {
@@ -42,6 +46,10 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
 
                 R.id.btn_circle_progress -> {
                     startActivity(Intent(this, ProgressActivity::class.java))
+                }
+
+                R.id.btn_circle_progress_ex -> {
+                    startActivity(Intent(this, ProgressExActivity::class.java))
                 }
 
                 R.id.btn_qqstep -> {
@@ -62,6 +70,10 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
 
                 R.id.btn_track -> {
                     startActivity(Intent(this, TrackViewActivity::class.java))
+                }
+
+                R.id.btn_marquee -> {
+                    startActivity(Intent(this, MarqueeActivity::class.java))
                 }
             }
         }

@@ -6,7 +6,7 @@
         <attr name="changeColor" format="color"/>
     </declare-styleable>
 
-    <declare-styleable name="CircularProgressBar">
+    <declare-styleable name="CircularProgressBarEx">
         <!-- 进度条的最大值 -->
         <attr name="maxProgress" format="integer"/>
         <!-- 当前进度 -->
@@ -30,6 +30,14 @@
             <enum name="angle180" value="180"/>
             <enum name="angle270" value="270"/>
         </attr>
+        <!-- 进度方向 -->
+        <attr name="direction">
+            <enum name="clockwise" value="1"/>
+            <enum name="counterclockwise" value="-1"/>
+        </attr>
+        <!-- 指针漏出的长度 -->
+        <attr name="outerSize" format="dimension"/>
+
     </declare-styleable>
 
     <declare-styleable name="RatingBar">

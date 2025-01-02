@@ -48,22 +48,22 @@ public class CircularProgressBar extends View {
         if (attrs != null) {
             TypedArray typedArray = context.getTheme().obtainStyledAttributes(
                     attrs,
-                    R.styleable.CircularProgressBar,
+                    R.styleable.CircularProgressBarEx,
                     0, 0
             );
 
             try {
-                maxProgress = typedArray.getInt(R.styleable.CircularProgressBar_maxProgress, 100);
-                progress = typedArray.getInt(R.styleable.CircularProgressBar_progress, 0);
-                circleBackgroundColor = typedArray.getColor(R.styleable.CircularProgressBar_circleBackgroundColor, Color.GRAY);
-                progressColor = typedArray.getColor(R.styleable.CircularProgressBar_progressColor, Color.GREEN);
-                circleWidth = typedArray.getDimensionPixelSize(R.styleable.CircularProgressBar_circleWidth, 20);
-                showProgressText = typedArray.getBoolean(R.styleable.CircularProgressBar_showProgressText, true);
-                progressTextColor = typedArray.getColor(R.styleable.CircularProgressBar_progressTextColor, Color.BLACK);
-                progressTextSize = typedArray.getDimensionPixelSize(R.styleable.CircularProgressBar_progressTextSize, 50);
+                maxProgress = typedArray.getInt(R.styleable.CircularProgressBarEx_maxProgress, 100);
+                progress = typedArray.getInt(R.styleable.CircularProgressBarEx_progress, 0);
+                circleBackgroundColor = typedArray.getColor(R.styleable.CircularProgressBarEx_circleBackgroundColor, Color.GRAY);
+                progressColor = typedArray.getColor(R.styleable.CircularProgressBarEx_progressColor, Color.GREEN);
+                circleWidth = typedArray.getDimensionPixelSize(R.styleable.CircularProgressBarEx_circleWidth, 20);
+                showProgressText = typedArray.getBoolean(R.styleable.CircularProgressBarEx_showProgressText, true);
+                progressTextColor = typedArray.getColor(R.styleable.CircularProgressBarEx_progressTextColor, Color.BLACK);
+                progressTextSize = typedArray.getDimensionPixelSize(R.styleable.CircularProgressBarEx_progressTextSize, 50);
 
                 // 获取自定义的起始角度
-                int angleValue = typedArray.getInt(R.styleable.CircularProgressBar_startAngle, 0);
+                int angleValue = typedArray.getInt(R.styleable.CircularProgressBarEx_startAngle, 0);
                 switch (angleValue) {
                     case 90:
                         startAngle = 90;

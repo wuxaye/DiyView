@@ -33,6 +33,12 @@
         android:text="环形进度条"/>
 
     <Button
+        android:id="@+id/btn_circle_progress_ex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="环形进度条(拓展)"/>
+
+    <Button
         android:id="@+id/btn_qqstep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,6 +61,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="跑道"/>
+
+    <Button
+        android:id="@+id/btn_marquee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="跑马灯"/>
 
 
 </LinearLayout>
