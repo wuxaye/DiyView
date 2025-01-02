@@ -23,7 +23,7 @@
 
 5. [带指针的渐变环形进度条](https://juejin.cn/post/7455179302729777186)
 <p align="center">
-  <img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/pointProgress.gif" >
+  <img width="auto" height="300" src="https://github.com/wuxaye/DiyView/blob/master/img/pointProgress.gif" >
 </p>
 
 6. [仿QQ步数](https://juejin.cn/post/7436667191539466250)
