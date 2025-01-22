@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.xaye.diyview.app.base.BaseActivity
 import com.xaye.diyview.databinding.ActivityMainBinding
 import com.xaye.diyview.ui.AlphabetActivity
+import com.xaye.diyview.ui.EraseActivity
 import com.xaye.diyview.ui.LoadingActivity
 import com.xaye.diyview.ui.MarqueeActivity
 import com.xaye.diyview.ui.ProgressActivity
@@ -33,7 +34,8 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
             mBind.btnRating,
             mBind.btnAlphabet,
             mBind.btnTrack,
-            mBind.btnMarquee
+            mBind.btnMarquee,
+            mBind.btnErase
         ) {
             when (it.id) {
                 R.id.btn_58view -> {
@@ -74,6 +76,10 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
 
                 R.id.btn_marquee -> {
                     startActivity(Intent(this, MarqueeActivity::class.java))
+                }
+
+                R.id.btn_erase -> {
+                    startActivity(Intent(this, EraseActivity::class.java))
                 }
             }
         }

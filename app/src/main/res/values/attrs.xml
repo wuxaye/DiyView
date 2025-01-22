@@ -62,4 +62,16 @@
     </declare-styleable>
 
 
+    <!--刮刮乐-->
+    <declare-styleable name="EraseView">
+        <attr name="outerText" format="string" />
+        <attr name="outerTextColor" format="color" />
+        <attr name="outerTextSize" format="dimension" />
+        <attr name="innerTextColor" format="color" />
+        <attr name="innerTextSize" format="dimension" />
+        <attr name="outerLayerColor" format="color" />
+        <attr name="innerLayerColor" format="color" />
+    </declare-styleable>
+
+
 </resources>

@@ -68,5 +68,11 @@
         android:layout_height="wrap_content"
         android:text="跑马灯"/>
 
+    <Button
+        android:id="@+id/btn_erase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="刮刮乐"/>
+
 
 </LinearLayout>
