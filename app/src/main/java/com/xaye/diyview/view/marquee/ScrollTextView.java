@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,9 +21,6 @@ import com.xaye.diyview.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Author xaye
@@ -49,10 +46,18 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
     private int viewWidth = 0, viewHeight = 0;// 视图的宽度和高度
     private float textWidth = 0f, textX = 0f, textY = 0f;// 文本的宽度、X坐标、Y坐标
     private float viewWidthPlusTextLength = 0.0f;// 视图宽度加上文本长度
-    private ScheduledExecutorService scheduler;// 定时任务调度器
     boolean isSetNewText = false;// 是否设置了新的文本
     boolean isScrollForever = true;// 是否无限滚动
     private Canvas canvas;// 画布，用于绘制文本
+    private OnTextClickListener onTextClickListener;// 点击事件监听器
+
+    public interface OnTextClickListener {
+        void onTextClick(int index, String text);
+    }
+
+    public void setOnTextClickListener(OnTextClickListener listener) {
+        this.onTextClickListener = listener;
+    }
 
     public ScrollTextView(Context context) {
         super(context);
@@ -123,8 +128,7 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         stopScroll = false;
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new ScrollTextThread(), 100, 100, TimeUnit.MILLISECONDS);
+        new Thread(new ScrollTextThread()).start();
         Log.d(TAG, "ScrollTextTextView is created");
     }
 
@@ -138,7 +142,6 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
         synchronized (this) {
             stopScroll = true;
         }
-        scheduler.shutdownNow();
         Log.d(TAG, "ScrollTextTextView is destroyed");
     }
 
@@ -267,6 +270,9 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 pauseScroll = !pauseScroll;
+                if (onTextClickListener != null) {
+                    onTextClickListener.onTextClick(currentTextIndex, textList.get(currentTextIndex));
+                }
                 break;
         }
         return true;
@@ -305,9 +311,9 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
 
         // --- 阶段1暂停：基线位置暂停 ---
         if (needHorizontalScroll) {
-            toSleep(1000);
+            sleep(1000);
         } else if (!stopScroll && !isSetNewText) {
-            toSleep(stayTimes); // 原基线位置暂停
+            sleep(stayTimes); // 原基线位置暂停
         }
 
         // --- 阶段2：水平滚动（垂直位置固定为基线）---
@@ -324,7 +330,7 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
 
             // --- 阶段2暂停：水平滚动完成后暂停 ---
             if (!stopScroll && !isSetNewText) {
-                toSleep(stayTimes); // 新增水平滚动完成后的暂停
+                sleep(stayTimes); // 新增水平滚动完成后的暂停
             }
         }
 
@@ -332,7 +338,7 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
         for (float i = baseLine; i > -fontHeight; i -= 3) {
             if (stopScroll || isSetNewText) return;
             if (pauseScroll) {
-                toSleep(1000);
+                sleep(1000);
                 continue;
             }
             drawText(needHorizontalScroll ? horizontalOffset : 0, i);
@@ -346,17 +352,6 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
         }
     }
 
-    // 封装绘制文本的方法（带水平偏移）
-//    private synchronized void drawTextWithHorizontalOffset(float horizontalOffset, float verticalPos) {
-//        try {
-//            canvas = surfaceHolder.lockCanvas();
-//            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-//            canvas.drawText(textList.get(currentTextIndex), horizontalOffset, verticalPos, paint);
-//        } finally {
-//            surfaceHolder.unlockCanvasAndPost(canvas);
-//        }
-//    }
-
     /**
      * 绘制文本
      */
@@ -364,9 +359,8 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
         try {
             canvas = surfaceHolder.lockCanvas();
             if (canvas == null) return;
-            canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
+            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             canvas.drawText(textList.get(currentTextIndex), x, y, paint);
-        } catch (Exception ignored) {
         } finally {
             if (canvas != null) {
                 surfaceHolder.unlockCanvasAndPost(canvas);
@@ -382,11 +376,11 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     // 测量文本参数
-    private void measureTextParams(boolean isInit) {
+    private void measureTextParams(boolean isInitialSetup) {
         if (currentTextIndex >= textList.size()) return;
         textWidth = paint.measureText(textList.get(currentTextIndex));
         viewWidthPlusTextLength = viewWidth + textWidth;
-        if (isInit) {
+        if (isInitialSetup) {
             textX = viewWidth - viewWidth / 2; // 第一次创建 ，默认从居中的位置开始滚动
             Paint.FontMetrics fm = paint.getFontMetrics();
             float distance = (fm.bottom - fm.top) / 2 - fm.bottom;
@@ -408,7 +402,7 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
                 if (isHorizontal) { // 水平滚动逻辑
 
                     if (pauseScroll) {// 暂停
-                        toSleep(1000);
+                        sleep(1000);
                         continue;
                     }
 
@@ -442,7 +436,7 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
         }
     }
 
-    private void toSleep(long millis) {
+    private void sleep(long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException ignored) {

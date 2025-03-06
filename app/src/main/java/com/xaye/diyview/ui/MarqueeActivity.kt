@@ -2,9 +2,11 @@ package com.xaye.diyview.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import com.hjq.toast.ToastUtils
 import com.xaye.diyview.R
 import com.xaye.diyview.app.base.BaseActivity
 import com.xaye.diyview.databinding.ActivityMarqueeBinding
+import com.xaye.diyview.view.marquee.ScrollTextView
 import com.xaye.helper.base.BaseViewModel
 
 
@@ -32,6 +34,11 @@ class MarqueeActivity : BaseActivity<BaseViewModel, ActivityMarqueeBinding>() {
         mBind.scrollTextH.speed = 4
         mBind.scrollTextH.setTextColor(Color.WHITE)
         mBind.scrollTextH.setScrollTextBackgroundColor(R.color.teal_200)
+        mBind.scrollTextH.setOnTextClickListener { index, text ->
+            run {
+                ToastUtils.show("点击了$index $text")
+            }
+        }
 
         mBind.scrollTextV.setTextList(textList)
         mBind.scrollTextV.isHorizontal = false
