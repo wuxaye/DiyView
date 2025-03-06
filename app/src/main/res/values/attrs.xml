@@ -73,5 +73,15 @@
         <attr name="innerLayerColor" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="ScrollTextView">
+        <attr name="clickEnable" format="boolean" />
+        <attr name="isHorizontal" format="boolean" />
+        <attr name="speed" format="integer" />
+        <attr name="stTextColor" format="color" />
+        <attr name="stTextSize" format="dimension" />
+        <attr name="times" format="integer" />
 
+        <attr name="isScrollForever" format="boolean" />
+
+    </declare-styleable>
 </resources>

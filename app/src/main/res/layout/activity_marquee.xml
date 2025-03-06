@@ -5,14 +5,46 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MarqueeActivity">
+    tools:context=".ui.MarqueeActivity"
+    android:orientation="vertical">
 
-    <com.xaye.diyview.view.marquee.MarqueeView
-        android:id="@+id/marqueeView"
-        android:layout_width="300dp"
-        android:layout_height="30dp"
-        android:background="#FFF8E1"
-        android:layout_marginTop="@dimen/dp_10"/>
+<!--    <com.xaye.diyview.view.marquee.MarqueeView-->
+<!--        android:id="@+id/marqueeView"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:background="#FFF8E1"-->
+<!--        android:layout_marginTop="@dimen/dp_10"/>-->
+
+    <com.xaye.diyview.view.marquee.ScrollTextView
+        android:id="@+id/scrollTextH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="#33336699"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:clickEnable="true"
+        app:isHorizontal="false"
+        app:speed="4"
+        app:stTextColor="@android:color/white"
+        app:stTextSize="24sp" />
+
+
+    <com.xaye.diyview.view.marquee.ScrollTextView
+        android:id="@+id/scrollTextV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="#33336699"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:clickEnable="false"
+        app:isHorizontal="false"
+        app:speed="4"
+        app:stTextColor="@android:color/white"
+        app:stTextSize="24sp" />
 
 
 </LinearLayout>
