@@ -25,26 +25,36 @@ class MarqueeActivity : BaseActivity<BaseViewModel, ActivityMarqueeBinding>() {
 //            startScroll()
 //        }
 
-        val textList: MutableList<String> = ArrayList()
-        textList.add("关于开展2025年市直公益性岗位征集工作的通知")
-        textList.add("国家发通知要求规范OTA升级 广汽将构建全域智行安全守护体系")
-        textList.add("2月28日，工信部联合市场监管总局发布了《关于进一步加强智能网联汽车准入、召回及软件在线升级管理的通知》（以下简称《通知》），为汽车产业健康有序发展提供了顶层指引。对此，广汽集团表示，承诺所有安全投入绝不转嫁用户成本。")
-        mBind.scrollTextH.setTextList(textList)
-        mBind.scrollTextH.isHorizontal = true
-        mBind.scrollTextH.speed = 4
-        mBind.scrollTextH.setTextColor(Color.WHITE)
-        mBind.scrollTextH.setScrollTextBackgroundColor(R.color.teal_200)
-        mBind.scrollTextH.setOnTextClickListener { index, text ->
-            run {
-                ToastUtils.show("点击了$index $text")
+        // 文字列表
+        val textList = mutableListOf(
+            "关于开展2025年市直公益性岗位征集工作的通知",
+            "国家发通知要求规范OTA升级 广汽将构建全域智行安全守护体系",
+            "2月28日，工信部联合市场监管总局发布了《关于进一步加强智能网联汽车准入、召回及软件在线升级管理的通知》（以下简称《通知》），为汽车产业健康有序发展提供了顶层指引。对此，广汽集团表示，承诺所有安全投入绝不转嫁用户成本。"
+        )
+
+        // 横向
+        mBind.scrollTextH.apply {
+            setTextList(textList)
+            this.isHorizontal = true
+            speed = 4
+            textColor = Color.WHITE
+            textBackColor = R.color.teal_200
+            isClickEnable = true
+            setOnTextClickListener { index, text ->
+                ToastUtils.show("点击了 $index $text")
             }
         }
 
-        mBind.scrollTextV.setTextList(textList)
-        mBind.scrollTextV.isHorizontal = false
-        mBind.scrollTextV.speed = 4
-        mBind.scrollTextV.setTextColor(Color.WHITE)
-        mBind.scrollTextV.setScrollTextBackgroundColor(R.color.teal_700)
+        // 竖向
+        mBind.scrollTextV.apply {
+            setTextList(textList) // 文字列表
+            this.isHorizontal = false // 是否横向滚动
+            speed = 4 // 滚动速度
+            stayTimes = 3000 // 停留时间 3s
+            textColor = Color.WHITE // 文字颜色
+            textBackColor = R.color.teal_700 // 文字背景颜色
+            isClickEnable = false // 是否可点击
+        }
 
 
     }

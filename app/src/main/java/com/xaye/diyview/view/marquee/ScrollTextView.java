@@ -156,9 +156,13 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
         return textBackColor;
     }
 
-    public void setScrollTextBackgroundColor(int color) {
+    public void setTextBackColor(int color) {
         this.setBackgroundColor(color);
         this.textBackColor = color;
+    }
+
+    public int getTextBackColor() {
+        return textBackColor;
     }
 
     public int getSpeed() {
@@ -176,6 +180,18 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
             needScrollTimes = times;
             isScrollForever = false;
         }
+    }
+
+    /**
+     * 纵向滚动设置每段文字的停留时间
+     * @param stayTimes
+     */
+    public void setStayTimes(long stayTimes) {
+        this.stayTimes = stayTimes;
+    }
+
+    public long getStayTimes() {
+        return stayTimes;
     }
 
     public void setTextSize(float textSizeTem) {
@@ -233,6 +249,9 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
         paint.setColor(textColor);
     }
 
+    public int getTextColor() {
+        return textColor;
+    }
 
     /**
      * 设置滚动速度
@@ -260,6 +279,14 @@ public class ScrollTextView extends SurfaceView implements SurfaceHolder.Callbac
 
     public void setPauseScroll(boolean pauseScroll) {
         this.pauseScroll = pauseScroll;
+    }
+
+    public boolean isClickEnable() {
+        return clickEnable;
+    }
+
+    public void setClickEnable(boolean clickEnable) {
+        this.clickEnable = clickEnable;
     }
 
     @Override
