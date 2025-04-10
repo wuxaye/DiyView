@@ -15,6 +15,8 @@
         app:wheel_can_touch="true"
         app:wheel_cur_process="60"
         app:wheel_has_wheel_shadow="true"
+        app:wheel_scroll_only_one_circle="true"
+        app:wheel_has_cache="true"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

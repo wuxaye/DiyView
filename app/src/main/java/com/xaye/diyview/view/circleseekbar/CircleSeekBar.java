@@ -58,7 +58,7 @@ public class CircleSeekBar extends View {
     private float mPointerRadius;//指针半径
 
     private double mCurAngle;//当前角度
-    private float mWheelCurX, mWheelCurY;//圆环当前圆心坐标
+    private float mWheelCurX, mWheelCurY;//锚点圆心坐标
 
     private boolean isHasWheelShadow, isHasPointerShadow;//圆环是否有阴影，指针是否有阴影
     private float mWheelShadowRadius, mPointerShadowRadius;//圆环阴影半径，指针阴影半径
@@ -206,32 +206,54 @@ public class CircleSeekBar extends View {
         int min = Math.min(width, height);
         setMeasuredDimension(min, min);
 
-        refreshPosition();
-        refershUnreachedWidth();
+        refreshPosition();//刷新锚点位置
+        refreshUnreachedWidth();//刷新默认圆环半径
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        float left = getPaddingLeft() + mUnreachedWidth / 2;
-        float top = getPaddingTop() + mUnreachedWidth / 2;
-        float right = canvas.getWidth() - getPaddingRight() - mUnreachedWidth / 2;
-        float bottom = canvas.getHeight() - getPaddingBottom() - mUnreachedWidth / 2;
-        float centerX = (left + right) / 2;
-        float centerY = (top + bottom) / 2;
+        // 计算基本尺寸参数
+        final float halfUnreachedWidth = mUnreachedWidth / 2f;
+        final int width = canvas.getWidth();
+        final int height = canvas.getHeight();
 
-        float wheelRadius = (canvas.getWidth() - getPaddingLeft() - getPaddingRight()) / 2 - mUnreachedWidth / 2;
+        // 计算绘制区域
+        final float left = getPaddingLeft() + halfUnreachedWidth;
+        final float top = getPaddingTop() + halfUnreachedWidth;
+        final float right = width - getPaddingRight() - halfUnreachedWidth;
+        final float bottom = height - getPaddingBottom() - halfUnreachedWidth;
 
+        // 计算中心点
+        final float centerX = (left + right) * 0.5f;
+        final float centerY = (top + bottom) * 0.5f;
+
+        // 计算半径
+        final float wheelRadius = (width - getPaddingLeft() - getPaddingRight()) * 0.5f - halfUnreachedWidth;
+
+        // 绘制背景圆环（使用缓存或实时绘制）
+        //为什么需要缓存？
+        //性能优化
+        //减少重复计算：背景圆环的几何计算只需要一次
+        //
+        //避免重复绘制：静态内容只需绘制一次到 Bitmap，之后直接复用
+        //
+        //降低GPU负担：减少每帧需要上传到GPU的数据量
+        //
+        //使用场景
+        //当 isHasCache 为 true 时启用缓存机制
+        //
+        //特别适合静态内容多、动态内容少的自定义 View
         if (isHasCache) {
             if (mCacheCanvas == null) {
                 buildCache(centerX, centerY, wheelRadius);
             }
             canvas.drawBitmap(mCacheBitmap, 0, 0, null);
         } else {
-            canvas.drawCircle(centerX, centerY, wheelRadius, mWheelPaint);
+            canvas.drawCircle(centerX, centerY, wheelRadius, mWheelPaint); //绘制背景圆环
         }
 
-        //画选中区域
-        canvas.drawArc(new RectF(left, top, right, bottom), -90, (float) mCurAngle, false, mReachedPaint);
+        // 绘制进度弧线
+        canvas.drawArc(left, top, right, bottom, -90f, (float) mCurAngle, false, mReachedPaint);
 
         //画锚点
         canvas.drawCircle(mWheelCurX, mWheelCurY, mPointerRadius, mPointerPaint);
@@ -254,15 +276,15 @@ public class CircleSeekBar extends View {
             float cos = computeCos(x, y);
             // 通过反三角函数获得角度值
             double angle;
-            if (x < getWidth() / 2) { // 滑动超过180度
+            if (x < getWidth() / 2) { // 滑动超过180度  触摸点在左半边（180°~360°）
                 angle = Math.PI * RADIAN + Math.acos(cos) * RADIAN;
-            } else { // 没有超过180度
+            } else { // 没有超过180度 触摸点在右半边（0°~180°）
                 angle = Math.PI * RADIAN - Math.acos(cos) * RADIAN;
             }
             if (isScrollOneCircle) {
                 if (mCurAngle > 270 && angle < 90) {
                     mCurAngle = 360;
-                    cos = -1;
+                    cos = -1;// 防止跳跃
                 } else if (mCurAngle < 90 && angle > 270) {
                     mCurAngle = 0;
                     cos = -1;
@@ -270,13 +292,17 @@ public class CircleSeekBar extends View {
                     mCurAngle = angle;
                 }
             } else {
-                mCurAngle = angle;
+                mCurAngle = angle; // 非循环模式，直接赋值
             }
+            // 根据角度计算当前进度（如 0~100）
             mCurProcess = getSelectedValue();
-            refershWheelCurPosition(cos);
+            // 更新滑块的坐标（圆环上的指针位置）
+            refreshWheelCurPosition(cos);
+            // 仅在 ACTION_MOVE 或 ACTION_UP 时触发回调。
             if (mChangListener != null && (event.getAction() & (MotionEvent.ACTION_MOVE | MotionEvent.ACTION_UP)) > 0) {
                 mChangListener.onChanged(this, mCurProcess);
             }
+            // 重绘
             invalidate();
             return true;
         } else {
@@ -284,10 +310,12 @@ public class CircleSeekBar extends View {
         }
     }
 
+    // 根据 两点间距离公式，判断触摸点 (x, y) 到圆心 (centerX, centerY) 的距离是否小于半径 radius。
     private boolean isTouch(float x, float y) {
         double radius = (getWidth() - getPaddingLeft() - getPaddingRight() + getCircleWidth()) / 2;
         double centerX = getWidth() / 2;
         double centerY = getHeight() / 2;
+        // 直接比较 平方距离 和 半径平方， 三角型 两边平方之和大于第三边平方 就不在圆内
         return Math.pow(centerX - x, 2) + Math.pow(centerY - y, 2) < radius * radius;
     }
 
@@ -295,11 +323,12 @@ public class CircleSeekBar extends View {
         return Math.max(mUnreachedWidth, Math.max(mReachedWidth, mPointerRadius));
     }
 
-    private void refershUnreachedWidth() {
+    // 计算默认圆环的半径
+    private void refreshUnreachedWidth() {
         mUnreachedRadius = (getMeasuredWidth() - getPaddingLeft() - getPaddingRight() - mUnreachedWidth) / 2;
     }
 
-    private void refershWheelCurPosition(double cos) {
+    private void refreshWheelCurPosition(double cos) {
         mWheelCurX = calcXLocationInWheel(mCurAngle, cos);
         mWheelCurY = calcYLocationInWheel(cos);
     }
@@ -309,7 +338,7 @@ public class CircleSeekBar extends View {
         mCurAngle = (double) mCurProcess / mMaxProcess * 360.0;
         //Math.toRadians(mCurAngle) 将角度 mCurAngle 从度数转换为弧度。因为在 Java 的 Math 库中，三角函数（如 cos 方法）使用的是弧度制
         double cos = -Math.cos(Math.toRadians(mCurAngle));
-        refershWheelCurPosition(cos);
+        refreshWheelCurPosition(cos);
     }
 
     // 计算圆上某点的X坐标
@@ -470,7 +499,7 @@ public class CircleSeekBar extends View {
     public void setUnreachedWidth(float unreachedWidth) {
         this.mUnreachedWidth = unreachedWidth;
         mWheelPaint.setStrokeWidth(unreachedWidth);
-        refershUnreachedWidth();
+        refreshUnreachedWidth();
         invalidate();
     }
 
