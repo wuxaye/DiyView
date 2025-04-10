@@ -16,4 +16,8 @@
     <color name="dark_gray">#FFA9A9A9</color>
     <!--粉红-->
     <color name="pink">#FFF08080</color>
+
+    <color name="def_wheel_color">#4E4988</color>
+    <color name="def_reached_color">#FFD844</color>
+    <color name="def_pointer_color">#FFFFFF</color>
 </resources>

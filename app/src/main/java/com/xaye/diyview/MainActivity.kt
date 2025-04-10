@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.xaye.diyview.app.base.BaseActivity
 import com.xaye.diyview.databinding.ActivityMainBinding
 import com.xaye.diyview.ui.AlphabetActivity
+import com.xaye.diyview.ui.CircleSeekBarActivity
 import com.xaye.diyview.ui.EraseActivity
 import com.xaye.diyview.ui.LoadingActivity
 import com.xaye.diyview.ui.MarqueeActivity
@@ -35,7 +36,8 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
             mBind.btnAlphabet,
             mBind.btnTrack,
             mBind.btnMarquee,
-            mBind.btnErase
+            mBind.btnErase,
+            mBind.btnCircleSeekBar
         ) {
             when (it.id) {
                 R.id.btn_58view -> {
@@ -80,6 +82,10 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
 
                 R.id.btn_erase -> {
                     startActivity(Intent(this, EraseActivity::class.java))
+                }
+
+                R.id.btn_circle_seek_bar -> {
+                    startActivity(Intent(this, CircleSeekBarActivity::class.java))
                 }
             }
         }
