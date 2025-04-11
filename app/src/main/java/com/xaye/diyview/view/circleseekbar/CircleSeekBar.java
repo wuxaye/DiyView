@@ -275,6 +275,11 @@ public class CircleSeekBar extends View {
             // 通过当前触摸点搞到cos角度值
             float cos = computeCos(x, y);
             // 通过反三角函数获得角度值
+
+            // 在单位圆中，任意点的坐标(x,y)可以表示为(cosθ, sinθ)
+            // 已知点的坐标，可以通过反余弦函数(arccos)求出角度
+
+            // 反余弦函数返回的是弧度值，范围是[0, π]（0°~180°）
             double angle;
             if (x < getWidth() / 2) { // 滑动超过180度  触摸点在左半边（180°~360°）
                 angle = Math.PI * RADIAN + Math.acos(cos) * RADIAN;
