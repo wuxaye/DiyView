@@ -13,6 +13,7 @@ import com.xaye.diyview.ui.ProgressActivity
 import com.xaye.diyview.ui.ProgressExActivity
 import com.xaye.diyview.ui.QQStepActivity
 import com.xaye.diyview.ui.RatingBarActivity
+import com.xaye.diyview.ui.StepViewActivity
 import com.xaye.diyview.ui.TrackActivity
 import com.xaye.diyview.ui.TrackViewActivity
 import com.xaye.diyview.ui.ViewPageActivity
@@ -37,7 +38,8 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
             mBind.btnTrack,
             mBind.btnMarquee,
             mBind.btnErase,
-            mBind.btnCircleSeekBar
+            mBind.btnCircleSeekBar,
+            mBind.btnStepView
         ) {
             when (it.id) {
                 R.id.btn_58view -> {
@@ -86,6 +88,9 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
 
                 R.id.btn_circle_seek_bar -> {
                     startActivity(Intent(this, CircleSeekBarActivity::class.java))
+                }
+                R.id.btn_step_view -> {
+                    startActivity(Intent(this, StepViewActivity::class.java))
                 }
             }
         }

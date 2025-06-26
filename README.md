@@ -14,7 +14,8 @@
 | [侧边字母选择器](https://juejin.cn/post/7442284498741198858)     | 实现字母快速选择的功能        | <div align="center"><img width="300" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/alphabetView.gif"></div>  |
 | 跑道                    | 动态显示赛跑效果           | <div align="center"><img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/trackview.gif"></div>     |
 | [文字跑马灯](https://juejin.cn/post/7478665093385289754)       | 多段文本跑马灯展示          | <div align="center"><img width="300" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/pmd.gif"></div>           |
-| 刮刮乐                  | 自定义刮刮乐控件，模拟刮奖效果    | <div align="center"><img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/eraseview.gif"></div>     |
+| 刮刮乐                                                       | 自定义刮刮乐控件，模拟刮奖效果    | <div align="center"><img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/eraseview.gif"></div>     |
+| 时间线                                                       | 物流信息时间线显示          | <div align="center"><img width="500" height="auto" src="https://github.com/wuxaye/DiyView/blob/master/img/stepview.gif"></div>      |
 
 
 

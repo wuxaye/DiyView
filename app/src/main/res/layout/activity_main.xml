@@ -80,5 +80,11 @@
         android:layout_height="wrap_content"
         android:text="环形SeekBar"/>
 
+    <Button
+        android:id="@+id/btn_step_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="stepview"/>
+
 
 </LinearLayout>
