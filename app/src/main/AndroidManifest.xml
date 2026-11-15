@@ -15,42 +15,55 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.StepViewActivity"
+            android:label="stepview"
             android:exported="false" />
         <activity
             android:name=".ui.CircleSeekBarActivity"
+            android:label="环形SeekBar"
             android:exported="false" />
         <activity
             android:name=".ui.EraseActivity"
+            android:label="刮刮乐"
             android:exported="false" />
         <activity
             android:name=".ui.ProgressExActivity"
+            android:label="环形进度条(拓展)"
             android:exported="false" />
         <activity
             android:name=".ui.MarqueeActivity"
+            android:label="跑马灯"
             android:exported="false" />
         <activity
             android:name=".ui.TrackViewActivity"
+            android:label="跑道"
             android:exported="false" />
         <activity
             android:name=".ui.AlphabetActivity"
+            android:label="字母表"
             android:exported="false" />
         <activity
             android:name=".ui.QQStepActivity"
+            android:label="仿QQ步数"
             android:exported="false" />
         <activity
             android:name=".ui.RatingBarActivity"
+            android:label="评分"
             android:exported="false" />
         <activity
             android:name=".ui.ProgressActivity"
+            android:label="环形进度条"
             android:exported="false" />
         <activity
             android:name=".ui.TrackActivity"
+            android:label="文字变色"
             android:exported="false" />
         <activity
             android:name=".ui.LoadingActivity"
+            android:label="仿58加载界面"
             android:exported="false" />
         <activity
             android:name=".ui.ViewPageActivity"
+            android:label="文字变色应用"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -61,6 +74,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".netease.paint.colorfilter.ColorFilterActivity"
+            android:label="滤镜网格（RecyclerView）"
+            android:exported="false" />
+        <activity
+            android:name=".netease.paint.colorfilter.ColorFilterViewActivity"
+            android:label="滤镜绘制（自定义View）"
+            android:exported="false" />
+        <activity
+            android:name=".netease.paint.xfermode.XfermodeViewActivity"
+            android:label="基础混合（DST_IN）"
+            android:exported="false" />
+        <activity
+            android:name=".netease.paint.xfermode.XfermodeEraserActivity"
+            android:label="橡皮擦刮奖（SRC_OUT）"
+            android:exported="false" />
+        <activity
+            android:name=".netease.paint.xfermode.XfermodesActivity"
+            android:label="18种混合模式"
+            android:exported="false" />
+        <activity
+            android:name=".netease.NeteaseMenuActivity"
+            android:label="UI示例合集"
+            android:exported="false" />
     </application>
 
 </manifest>

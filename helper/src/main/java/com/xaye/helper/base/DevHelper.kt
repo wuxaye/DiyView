@@ -4,7 +4,7 @@ import android.app.Application
 import android.os.Environment
 import android.view.Gravity
 import com.hjq.toast.ToastUtils
-import com.xaye.helper.BuildConfig
+
 import com.xaye.helper.loadsir.callback.SuccessCallback
 import com.xaye.helper.loadsir.core.LoadSir
 import com.xaye.helper.util.KtxActivityLifecycleCallbacks

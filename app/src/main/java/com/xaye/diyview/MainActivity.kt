@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.xaye.diyview.app.base.BaseActivity
 import com.xaye.diyview.databinding.ActivityMainBinding
+import com.xaye.diyview.netease.NeteaseMenuActivity
 import com.xaye.diyview.ui.AlphabetActivity
 import com.xaye.diyview.ui.CircleSeekBarActivity
 import com.xaye.diyview.ui.EraseActivity
@@ -21,12 +22,17 @@ import com.xaye.helper.base.BaseViewModel
 import com.xaye.helper.ext.setOnclickNoRepeat
 
 class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
+
+    // 主页是根页面，无需返回标题栏
+    override fun showToolBar(): Boolean = false
+
     override fun initView(savedInstanceState: Bundle?) {
 
     }
 
     override fun onBindViewClick() {
         setOnclickNoRepeat(
+            mBind.btnNetease,
             mBind.btn58view,
             mBind.btnTvTrack,
             mBind.btnCircleProgress,
@@ -42,6 +48,10 @@ class MainActivity : BaseActivity<BaseViewModel, ActivityMainBinding>() {
             mBind.btnStepView
         ) {
             when (it.id) {
+                R.id.btn_netease -> {
+                    startActivity(Intent(this, NeteaseMenuActivity::class.java))
+                }
+
                 R.id.btn_58view -> {
                     startActivity(Intent(this, LoadingActivity::class.java))
                 }
