@@ -1,6 +1,9 @@
 package com.xaye.diyview.netease
 
 import android.app.Activity
+import com.xaye.diyview.netease.canvas.split.CanvasSplitActivity
+import com.xaye.diyview.netease.canvas.transform.CanvasSaveRestoreActivity
+import com.xaye.diyview.netease.canvas.transform.CanvasTransformActivity
 import com.xaye.diyview.netease.paint.colorfilter.ColorFilterActivity
 import com.xaye.diyview.netease.paint.colorfilter.ColorFilterViewActivity
 import com.xaye.diyview.netease.paint.xfermode.XfermodeEraserActivity
@@ -53,6 +56,19 @@ object NeteaseRegistry {
                 NeteaseDemo("基础混合（DST_IN）", XfermodeViewActivity::class.java),
                 NeteaseDemo("橡皮擦刮奖（SRC_OUT）", XfermodeEraserActivity::class.java),
                 NeteaseDemo("18种混合模式", XfermodesActivity::class.java)
+            )
+        ),
+        NeteaseGroup(
+            title = "Canvas 变换与状态保存",
+            demos = listOf(
+                NeteaseDemo("变换操作（平移/缩放/旋转/倾斜/切割）", CanvasTransformActivity::class.java),
+                NeteaseDemo("状态保存与恢复（saveLayer）", CanvasSaveRestoreActivity::class.java)
+            )
+        ),
+        NeteaseGroup(
+            title = "粒子效果",
+            demos = listOf(
+                NeteaseDemo("图片粒子碎裂（轻触触发）", CanvasSplitActivity::class.java)
             )
         )
     )

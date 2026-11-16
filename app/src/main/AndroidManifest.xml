@@ -96,6 +96,18 @@
             android:label="18种混合模式"
             android:exported="false" />
         <activity
+            android:name=".netease.canvas.transform.CanvasTransformActivity"
+            android:label="变换操作（平移/缩放/旋转/倾斜/切割）"
+            android:exported="false" />
+        <activity
+            android:name=".netease.canvas.transform.CanvasSaveRestoreActivity"
+            android:label="状态保存与恢复（saveLayer）"
+            android:exported="false" />
+        <activity
+            android:name=".netease.canvas.split.CanvasSplitActivity"
+            android:label="图片粒子碎裂（轻触触发）"
+            android:exported="false" />
+        <activity
             android:name=".netease.NeteaseMenuActivity"
             android:label="UI示例合集"
             android:exported="false" />

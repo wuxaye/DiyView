@@ -23,7 +23,6 @@ public class ColorFilterActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_color_filter);
 
-        // 统一标题栏：标题取清单 label，返回键 finish
         ((TextView) findViewById(R.id.tv_title_bar)).setText(getTitle());
         findViewById(R.id.iv_title_bar_back).setOnClickListener(v -> finish());
 

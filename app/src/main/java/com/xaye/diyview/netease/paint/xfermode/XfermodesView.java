@@ -113,7 +113,6 @@ public class XfermodesView extends View {
         m.setScale(6, 6);
         mBG.setLocalMatrix(m);
 
-        //原 Demo 在构造函数中一次性生成，避免 onDraw 每帧创建位图
         mDstB = makeDst(2 * W / 3, 2 * H / 3);
         mSrcB = makeSrc(2 * W / 3, 2 * H / 3);
     }
