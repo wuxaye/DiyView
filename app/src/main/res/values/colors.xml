@@ -20,4 +20,20 @@
     <color name="def_wheel_color">#4E4988</color>
     <color name="def_reached_color">#FFD844</color>
     <color name="def_pointer_color">#FFFFFF</color>
+
+    <color name="splash_orange">#FF9600</color>
+    <color name="splash_aqua">#02D1AC</color>
+    <color name="splash_yellow">#FFD200</color>
+    <color name="splash_blue">#00C6FF</color>
+    <color name="splash_green">#00E099</color>
+    <color name="splash_pink">#FF3892</color>
+
+    <array name="splash_circle_colors">
+        <item>@color/splash_blue</item>
+        <item>@color/splash_green</item>
+        <item>@color/splash_pink</item>
+        <item>@color/splash_orange</item>
+        <item>@color/splash_aqua</item>
+        <item>@color/splash_yellow</item>
+    </array>
 </resources>

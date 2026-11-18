@@ -1,6 +1,7 @@
 package com.xaye.diyview.netease
 
 import android.app.Activity
+import com.xaye.diyview.netease.canvas.splash.CanvasSplashActivity
 import com.xaye.diyview.netease.canvas.split.CanvasSplitActivity
 import com.xaye.diyview.netease.canvas.transform.CanvasSaveRestoreActivity
 import com.xaye.diyview.netease.canvas.transform.CanvasTransformActivity
@@ -69,6 +70,12 @@ object NeteaseRegistry {
             title = "粒子效果",
             demos = listOf(
                 NeteaseDemo("图片粒子碎裂（轻触触发）", CanvasSplitActivity::class.java)
+            )
+        ),
+        NeteaseGroup(
+            title = "Canvas 操作案例",
+            demos = listOf(
+                NeteaseDemo("水波纹加载动画（SplashView）", CanvasSplashActivity::class.java)
             )
         )
     )

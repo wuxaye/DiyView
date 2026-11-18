@@ -108,6 +108,10 @@
             android:label="图片粒子碎裂（轻触触发）"
             android:exported="false" />
         <activity
+            android:name=".netease.canvas.splash.CanvasSplashActivity"
+            android:label="水波纹加载动画（SplashView）"
+            android:exported="false" />
+        <activity
             android:name=".netease.NeteaseMenuActivity"
             android:label="UI示例合集"
             android:exported="false" />
