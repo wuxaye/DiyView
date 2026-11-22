@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.xaye.diyview.netease.canvas.bezier.DragBubbleView
+        android:id="@+id/bubbleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#999999"
+        app:bubble_color="#ff0000"
+        app:bubble_radius="12dp"
+        app:bubble_text="12"
+        app:bubble_textColor="#ffffff"
+        app:bubble_textSize="12dp" />
+
+</LinearLayout>

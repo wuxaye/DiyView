@@ -112,6 +112,18 @@
             android:label="水波纹加载动画（SplashView）"
             android:exported="false" />
         <activity
+            android:name=".netease.canvas.bezier.CanvasBezierPathActivity"
+            android:label="二阶与三阶贝塞尔曲线"
+            android:exported="false" />
+        <activity
+            android:name=".netease.canvas.bezier.CanvasBezierMultiActivity"
+            android:label="多阶贝塞尔曲线（de Casteljau）"
+            android:exported="false" />
+        <activity
+            android:name=".netease.canvas.bezier.CanvasDragBubbleActivity"
+            android:label="拖拽气泡（贝塞尔曲线应用）"
+            android:exported="false" />
+        <activity
             android:name=".netease.NeteaseMenuActivity"
             android:label="UI示例合集"
             android:exported="false" />
