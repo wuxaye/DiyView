@@ -124,6 +124,10 @@
             android:label="拖拽气泡（贝塞尔曲线应用）"
             android:exported="false" />
         <activity
+            android:name=".netease.canvas.pathmeasure.CanvasPathMeasureActivity"
+            android:label="Path 测量（PathMeasure）"
+            android:exported="false" />
+        <activity
             android:name=".netease.NeteaseMenuActivity"
             android:label="UI示例合集"
             android:exported="false" />

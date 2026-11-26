@@ -47,3 +47,4 @@
 | 图片粒子碎裂 | 图片按像素点碎裂散落（轻触触发） | [代码](https://github.com/wuxaye/DiyView/tree/master/app/src/main/java/com/xaye/diyview/netease/canvas/split) |
 | 水波纹加载动画 | SplashView 扩散圆加载效果 | [代码](https://github.com/wuxaye/DiyView/tree/master/app/src/main/java/com/xaye/diyview/netease/canvas/splash) |
 | 贝塞尔曲线 | 二/三阶曲线、多阶 de Casteljau、拖拽气泡 | [代码](https://github.com/wuxaye/DiyView/tree/master/app/src/main/java/com/xaye/diyview/netease/canvas/bezier) |
+| Path 测量（PathMeasure） | 路径长度/截取/nextContour，取点取切线驱动箭头沿圆周运动 | [代码](https://github.com/wuxaye/DiyView/tree/master/app/src/main/java/com/xaye/diyview/netease/canvas/pathmeasure) |

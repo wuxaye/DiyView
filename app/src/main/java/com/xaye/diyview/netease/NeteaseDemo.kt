@@ -5,6 +5,7 @@ import com.xaye.diyview.netease.canvas.splash.CanvasSplashActivity
 import com.xaye.diyview.netease.canvas.bezier.CanvasBezierMultiActivity
 import com.xaye.diyview.netease.canvas.bezier.CanvasBezierPathActivity
 import com.xaye.diyview.netease.canvas.bezier.CanvasDragBubbleActivity
+import com.xaye.diyview.netease.canvas.pathmeasure.CanvasPathMeasureActivity
 import com.xaye.diyview.netease.canvas.split.CanvasSplitActivity
 import com.xaye.diyview.netease.canvas.transform.CanvasSaveRestoreActivity
 import com.xaye.diyview.netease.canvas.transform.CanvasTransformActivity
@@ -87,6 +88,12 @@ object NeteaseRegistry {
                 NeteaseDemo("二阶与三阶贝塞尔曲线", CanvasBezierPathActivity::class.java),
                 NeteaseDemo("多阶贝塞尔曲线（de Casteljau）", CanvasBezierMultiActivity::class.java),
                 NeteaseDemo("拖拽气泡（贝塞尔曲线应用）", CanvasDragBubbleActivity::class.java)
+            )
+        ),
+        NeteaseGroup(
+            title = "Path 测量（PathMeasure）",
+            demos = listOf(
+                NeteaseDemo("Path 测量（PathMeasure）", CanvasPathMeasureActivity::class.java)
             )
         )
     )
